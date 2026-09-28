@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from 'react-icons/fa'
 import PageHero from '../components/PageHero.jsx'
-import heroImg from '../assets/images/creche.jpg'
+import { FORMSPREE_CONTACT } from '../config.js'
+import { sendForm } from '../lib/sendForm.js'
 
 // ---- Edit the contact details here ----
 const MAP_LINK =
@@ -23,32 +24,43 @@ const inputClass =
 
 export default function Contact() {
   const [status, setStatus] = useState({ type: '', text: '' })
+  const [sending, setSending] = useState(false)
 
-  // Checks required fields, then shows a thank-you message.
-  // Connect this to your email service later (e.g. Formspree or EmailJS).
-  function handleSubmit(e) {
+  // Checks the fields, sends the message to Formspree, then shows the result
+  async function handleSubmit(e) {
     e.preventDefault()
     const form = e.currentTarget
+
     if (!form.checkValidity()) {
       setStatus({ type: 'error', text: 'Please fill in all the required fields.' })
       form.querySelector(':invalid')?.focus()
       return
     }
-    setStatus({ type: 'success', text: 'Thank you! We will reply within one working day.' })
-    form.reset()
+
+    setSending(true)
+    setStatus({ type: '', text: '' })
+    const ok = await sendForm(FORMSPREE_CONTACT, form)
+    setSending(false)
+
+    if (ok) {
+      setStatus({ type: 'success', text: 'Thank you! Your message has been sent. We will reply within one working day.' })
+      form.reset()
+    } else {
+      setStatus({ type: 'error', text: 'Sorry, something went wrong. Please try again, or call us on +234 703 869 2765.' })
+    }
   }
 
   return (
     <>
-      {/* ---------- Header ---------- */}
+      {/* ---------- Header: plain, no background image ---------- */}
       <PageHero
+        variant="plain"
         title="Contact us"
         intro="We’d love to hear from you. Reach us in whichever way suits you best."
-        image={heroImg}
       />
 
       {/* ---------- Contact cards ---------- */}
-      <section aria-label="Ways to reach us" className="py-20 md:py-28">
+      <section aria-label="Ways to reach us" className="pb-20 md:pb-28">
         <div className="mx-auto grid max-w-[1280px] gap-5 px-5 sm:grid-cols-2 md:px-8 lg:grid-cols-4 xl:px-10">
           {cards.map(({ icon: Icon, title, text, href }) => {
             const content = (
@@ -58,10 +70,8 @@ export default function Contact() {
                 <p className="mt-2 break-words text-[15px] font-light text-muted">{text}</p>
               </>
             )
-            const cardClass =
-              'block h-full rounded-md border border-hair bg-white p-8 transition-all duration-300'
+            const cardClass = 'block h-full rounded-md border border-hair bg-white p-8 transition-all duration-300'
 
-            // Cards with a link are fully clickable; the office hours card is not
             return href ? (
               <a key={title} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} className={`${cardClass} hover:-translate-y-1 hover:border-transparent hover:shadow-lift`}>{content}</a>
             ) : (
@@ -84,6 +94,11 @@ export default function Contact() {
             </h2>
 
             <form noValidate onSubmit={handleSubmit} className="grid gap-5 md:grid-cols-2">
+              {/* Hidden: sets the email subject line you receive */}
+              <input type="hidden" name="_subject" value="New message from the website (Contact page)" />
+              {/* Hidden spam trap: real people never fill this in */}
+              <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+
               <div className="flex flex-col gap-2">
                 <label htmlFor="c-name" className="text-sm font-medium text-ink">Full name *</label>
                 <input id="c-name" name="name" required placeholder="Your full name" className={inputClass} />
@@ -112,9 +127,10 @@ export default function Contact() {
               <div className="md:col-span-2">
                 <button
                   type="submit"
-                  className="inline-flex min-h-[52px] items-center justify-center rounded-md bg-ml-navy px-8 text-[15px] font-medium text-white transition-colors hover:bg-ml-blue"
+                  disabled={sending}
+                  className="inline-flex min-h-[52px] items-center justify-center rounded-md bg-ml-navy px-8 text-[15px] font-medium text-white transition-colors hover:bg-ml-blue disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Send message
+                  {sending ? 'Sending…' : 'Send message'}
                 </button>
                 <p
                   role="status"

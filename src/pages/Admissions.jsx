@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { FaCheckCircle, FaPhoneAlt, FaEnvelope, FaClock, FaMapMarkerAlt, FaChevronDown } from 'react-icons/fa'
 import PageHero from '../components/PageHero.jsx'
 import heroImg from '../assets/images/schoolHero.jpg'
+import { FORMSPREE_ADMISSIONS } from '../config.js'
+import { sendForm } from '../lib/sendForm.js'
 
 // ---- Edit the content here ----
 const steps = [
@@ -59,20 +61,30 @@ const inputClass =
 
 export default function Admissions() {
   const [status, setStatus] = useState({ type: '', text: '' })
+  const [sending, setSending] = useState(false)
 
-  // Checks required fields, then shows a thank-you message.
-  // Connect this to your email service or backend later.
-  function handleSubmit(e) {
+  // Checks the fields, sends the request to Formspree, then shows the result
+  async function handleSubmit(e) {
     e.preventDefault()
     const form = e.currentTarget
+
     if (!form.checkValidity()) {
-      const firstInvalid = form.querySelector(':invalid')
       setStatus({ type: 'error', text: 'Please fill in all the required fields.' })
-      firstInvalid?.focus()
+      form.querySelector(':invalid')?.focus()
       return
     }
-    setStatus({ type: 'success', text: 'Thank you! Our admissions team will contact you within one working day.' })
-    form.reset()
+
+    setSending(true)
+    setStatus({ type: '', text: '' })
+    const ok = await sendForm(FORMSPREE_ADMISSIONS, form)
+    setSending(false)
+
+    if (ok) {
+      setStatus({ type: 'success', text: 'Thank you! Our admissions team will contact you within 24 hours.' })
+      form.reset()
+    } else {
+      setStatus({ type: 'error', text: 'Sorry, something went wrong. Please try again, or call us on +234 703 869 2765.' })
+    }
   }
 
   return (
@@ -161,6 +173,8 @@ export default function Admissions() {
               <div className="flex flex-col gap-2">
                 <label htmlFor="parent-name" className="text-sm font-medium text-ink">Parent’s full name *</label>
                 <input id="parent-name" name="name" required placeholder="Your full name" className={inputClass} />
+                              <input type="hidden" name="_subject" value="New school visit request (Admissions page)" />
+              <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="phone" className="text-sm font-medium text-ink">Phone number *</label>
@@ -188,11 +202,12 @@ export default function Admissions() {
                 <textarea id="notes" name="notes" rows={4} placeholder="Optional" className={`${inputClass} resize-y`} />
               </div>
               <div className="md:col-span-2">
-                <button
+                               <button
                   type="submit"
-                  className="inline-flex min-h-[52px] items-center justify-center rounded-md bg-ml-navy px-8 text-[15px] font-medium text-white transition-colors hover:bg-ml-blue"
+                  disabled={sending}
+                  className="inline-flex min-h-[52px] items-center justify-center rounded-md bg-ml-navy px-8 text-[15px] font-medium text-white transition-colors hover:bg-ml-blue disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Request a visit
+                  {sending ? 'Sending…' : 'Request a visit'}
                 </button>
                 <p
                   role="status"
