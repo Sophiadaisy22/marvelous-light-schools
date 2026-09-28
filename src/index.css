@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  /* Font */
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette */
+  --color-ml-blue: #042d99;       /* main brand blue */
+  --color-ml-blue-deep: #021f6b;
+  --color-ml-navy: #021a5c;       /* deeper blue */
+  --color-ml-sky: #6ec7f3;
+  --color-ml-green: #27bf39;
+  --color-ml-lime: #aee764;
+  --color-ml-orange: #ec8131;
+  --color-ml-yellow: #fad330;
+  --color-ml-gold: #e0a800;       /* deeper gold for icons on white */
+
+  /* Blue shades (700 = your brand blue) */
+  --color-ml-blue-50: #eef4ff;
+  --color-ml-blue-100: #dce7fe;
+  --color-ml-blue-200: #b9cefc;
+  --color-ml-blue-300: #8aabf6;
+  --color-ml-blue-400: #5580ec;
+  --color-ml-blue-500: #2a58da;
+  --color-ml-blue-600: #0e3dc0;
+  --color-ml-blue-700: #042d99;
+  --color-ml-blue-800: #03237a;
+  --color-ml-blue-900: #021a5c;
+  --color-ml-blue-950: #01113d;
+
+  /* Sky tints */
+  --color-ml-sky-50: #eef8fe;
+  --color-ml-sky-100: #d8f0fc;
+
+  /* Text and neutrals */
+  --color-ink: #0a1f5c;
+  --color-muted: #5a6583;
+  --color-line: #e4e9f2;
+  --color-hair: #edf0f6;
+  --color-soft: #f5f7fb;
+
+  /* Corners and shadow */
+  --radius-md: 6px;
+  --shadow-lift: 0 24px 48px -20px rgb(4 45 153 / 0.22);
+
+  /* Slider animation */
+  --animate-marquee: marquee 35s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+}
