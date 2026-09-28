@@ -78,4 +78,4 @@ export default function PageHero({ title, intro, image, alt = '', position = 'ce
       </div>
     </section>
   )
-}git
+}
