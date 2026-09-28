@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import Loader from './Loader.jsx'
 
 export default function Layout() {
   const { pathname } = useLocation()
@@ -15,7 +16,10 @@ export default function Layout() {
     <>
       <Navbar />
       <main>
-        <Outlet />
+        {/* While a page is downloading, show the Loader in its place */}
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </>

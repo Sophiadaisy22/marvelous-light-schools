@@ -7,7 +7,6 @@ import logo from '../assets/images/logo.png'
 const quickLinks = [
   { to: '/about', label: 'About us' },
   { to: '/values', label: 'Our values' },
-  { to: '/leadership', label: 'Leadership' },
   { to: '/why-choose-us', label: 'Why choose us' },
   { to: '/gallery', label: 'Gallery' },
   { to: '/contact', label: 'Contact' },
@@ -15,10 +14,15 @@ const quickLinks = [
 
 const programs = ['Early Years', 'Primary School', 'Junior Secondary', 'Senior Secondary']
 
+// `href` makes an item tappable (tel: opens the dialer, mailto: opens email, https opens Google Maps)
 const contact = [
-  { icon: FaMapMarkerAlt, text: '[School address], Lagos' },
-  { icon: FaPhoneAlt, text: '[+234 phone number]' },
-  { icon: FaEnvelope, text: '[email address]' },
+  {
+    icon: FaMapMarkerAlt,
+    text: '5 Martins Street, Ota, Ogun State',
+    href: 'https://www.google.com/maps/place//data=!4m2!3m1!1s0x103b9904029d8d17:0x366351f94fcc9941?sa=X&ved=1t:8290&ictx=111',
+  },
+  { icon: FaPhoneAlt, text: '+234 703 869 2765', href: 'tel:+2347038692765' },
+  { icon: FaEnvelope, text: 'lifesucess.school@gmail.com', href: 'mailto:lifesucess.school@gmail.com' },
   { icon: FaClock, text: 'Mon – Fri, 7:30am – 4pm' },
 ]
 
@@ -44,7 +48,7 @@ export default function Footer() {
             </Link>
             <p className="mt-5 max-w-[34ch] text-[15px] font-light text-white/70">
               Building Bright Minds, Shaping Future Leaders. A premium school from Early Years to Senior
-              Secondary in Lagos.
+              Secondary in Ota, Ogun State.
             </p>
 
             {/* Social icons: no backgrounds, gold on hover */}
@@ -85,10 +89,14 @@ export default function Footer() {
           <div>
             <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.08em] text-ml-yellow">Contact</h3>
             <ul className="grid gap-4">
-              {contact.map(({ icon: Icon, text }) => (
+              {contact.map(({ icon: Icon, text, href }) => (
                 <li key={text} className="flex items-start gap-3 text-[15px] font-light text-white/70">
                   <Icon className="mt-1 size-4 flex-none text-ml-yellow" aria-hidden="true" />
-                  {text}
+                  {href ? (
+                    <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} className="min-w-0 break-words transition-colors hover:text-white">{text}</a>
+                  ) : (
+                    <span>{text}</span>
+                  )}
                 </li>
               ))}
             </ul>

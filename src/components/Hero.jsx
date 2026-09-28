@@ -36,8 +36,8 @@ export default function Hero() {
             </h1>
 
             <p className="max-w-[46ch] text-[18px] font-light leading-[1.7] text-muted">
-              A warm, ambitious school in Lagos where children from Creche to Senior Secondary learn to
-              think deeply, act kindly and lead with confidence.
+                         A warm, ambitious school in Ota, Ogun State, where children from Creche to Senior Secondary
+              learn to think deeply, act kindly and lead with confidence.
             </p>
 
             <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">

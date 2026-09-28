@@ -60,7 +60,7 @@ export default function About() {
               Junior and Senior Secondary.
             </p>
             <p className="mt-5 text-[17px] font-light text-muted">
-              Today we welcome families from across Lagos, while keeping the warmth and personal attention
+              Today we welcome families from across Nigeria, while keeping the warmth and personal attention
               that made us who we are.
             </p>
           </div>

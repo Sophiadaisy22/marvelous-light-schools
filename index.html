@@ -15,7 +15,62 @@
   rel="stylesheet">
   </head>
   <body>
-    <div id="root"></div>
+           <div id="root">
+      <div class="app-loader" role="status" aria-live="polite">
+        <div class="app-loader__badge" aria-hidden="true">
+          <div class="app-loader__ring"></div>
+          <div class="app-loader__logo"></div>
+        </div>
+        <p>Marvelous Light Schools</p>
+      </div>
+    </div>
+    <style>
+      .app-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background: #fff;
+        font-family: 'Poppins', system-ui, sans-serif;
+        font-weight: 600;
+        color: #042d99;
+      }
+      .app-loader__badge {
+        position: relative;
+        width: 110px;
+        height: 110px;
+      }
+      .app-loader__ring {
+        position: absolute;
+        inset: 0;
+        border: 4px solid #dce7fe;
+        border-top-color: #ec8131;
+        border-radius: 50%;
+        animation: app-spin 0.9s linear infinite;
+      }
+      .app-loader__logo {
+        position: absolute;
+        inset: 14px;
+        background: #042d99;
+        -webkit-mask: url('/logo.png') center / contain no-repeat;
+        mask: url('/logo.png') center / contain no-repeat;
+        animation: app-pulse 1.6s ease-in-out infinite;
+      }
+      @keyframes app-spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes app-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.55; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .app-loader__ring,
+        .app-loader__logo { animation: none; }
+      }
+    </style>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
