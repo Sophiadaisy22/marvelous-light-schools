@@ -14,7 +14,7 @@ const approach = [
   {
     icon: FaUserFriends,
     title: 'Personal attention',
-    text: "Small classes and close progress tracking mean every child is known, stretched and supported at their own pace.",
+    text: 'Small classes and close progress tracking mean every child is known, stretched and supported at their own pace.',
   },
   {
     icon: FaHandsHelping,
@@ -26,8 +26,9 @@ const approach = [
 export default function About() {
   return (
     <>
-      {/* ---------- 1. Page hero ---------- */}
+      {/* ---------- 1. Header: plain, no background image ---------- */}
       <PageHero
+        variant="plain"
         title="About us"
         intro="Marvelous Light Schools is a premium school from Early Years to Senior Secondary in Lagos, built on academic excellence, strong character and a genuine partnership with families."
         image={heroImg}

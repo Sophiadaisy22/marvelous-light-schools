@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import {
   FaHeart,
   FaHandshake,
@@ -8,6 +7,7 @@ import {
   FaBullseye,
   FaMountain,
 } from 'react-icons/fa'
+import PageHero from '../components/PageHero.jsx'
 import AdmissionsBanner from '../components/AdmissionsBanner.jsx'
 import valuesImg from '../assets/images/secondary.jpg'
 import characterImg from '../assets/images/primary.jpg'
@@ -26,43 +26,13 @@ const values = [
 export default function Values() {
   return (
     <>
-      {/* ---------- Hero: background image with heading on it ---------- */}
-      <section
-        aria-labelledby="values-page-title"
-        className="relative flex min-h-[380px] items-center overflow-hidden md:min-h-[520px]"
-      >
-        {/* Background image */}
-        <img
-          src={valuesImg}
-          alt=""
-          className="absolute inset-0 size-full object-cover"
-          style={{ objectPosition: 'center 30%' }}
-        />
-        {/* Navy overlay so the white text is readable */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-b from-ml-navy/75 via-ml-navy/60 to-ml-navy/80"
-        />
-
-        {/* Text on top */}
-        <div className="relative mx-auto w-full max-w-[1280px] px-5 py-16 text-center md:px-8 xl:px-10">
-          <nav aria-label="Breadcrumb" className="mb-6 flex justify-center gap-2.5 text-sm text-white/70">
-            <Link to="/" className="transition-colors hover:text-white">Home</Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-white">Our values</span>
-          </nav>
-          <h1
-            id="values-page-title"
-            className="text-[clamp(34px,5vw,64px)] font-bold uppercase leading-[1.1] tracking-[0.02em] text-white"
-          >
-            Our values
-          </h1>
-          <span className="mx-auto mt-6 block h-[3px] w-12 rounded-full bg-ml-orange" aria-hidden="true" />
-          <p className="mx-auto mt-6 max-w-[52ch] text-[17px] font-light text-white/85 md:text-lg">
-            The principles that guide how we teach, how we behave and how we treat one another.
-          </p>
-        </div>
-      </section>
+      {/* ---------- Header (shared component) ---------- */}
+      <PageHero
+        title="Our values"
+        intro="The principles that guide how we teach, how we behave and how we treat one another."
+        image={valuesImg}
+        position="center 30%"
+      />
 
       {/* ---------- Intro: picture left, text right ---------- */}
       <section aria-labelledby="character-title" className="py-20 md:py-28">
