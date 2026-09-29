@@ -8,7 +8,6 @@ const aboutLinks = [
   { to: '/values', label: 'Our values' },
   { to: '/ethos', label: 'Our ethos' },
   { to: '/facilities', label: 'Our facilities' },
-  { to: '/leadership', label: 'Leadership & management' },
   { to: '/why-choose-us', label: 'Why choose us' },
 ]
 const mainLinks = [
@@ -75,7 +74,7 @@ export default function Navbar() {
   return (
     <>
     <header className="sticky top-0 z-50 border-b border-hair bg-white/95 backdrop-blur-md">
-      <div className="mx-auto flex h-[84px] max-w-[1280px] items-center justify-between gap-6 px-5 md:px-8 xl:px-10">
+      <div className="mx-auto flex h-[84px] max-w-[1280px] items-center justify-between gap-6 px-5 md:px-8 xl:px-10 ">
         {/* Logo + name */}
         <Link to="/" className="flex items-center gap-3.5 text-ml-blue">
           <Logo />
