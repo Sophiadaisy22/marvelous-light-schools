@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-// ---- Edit the figures here (these are SAMPLE numbers, replace with real ones) ----
+
 const stats = [
   { value: '10+', label: 'Years of nurturing bright minds' },
   { value: '500', label: 'Students from Creche to SS 3' },
